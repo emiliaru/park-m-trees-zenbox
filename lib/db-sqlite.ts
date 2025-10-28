@@ -177,9 +177,10 @@ export function query<T = any>(sql: string, params: any[] = []): T[] {
   return stmt.all(...params) as T[];
 }
 
-export function queryOne<T = any>(sql: string, params: any[] = []): T | undefined {
+export function queryOne<T = any>(sql: string, params: any[] = []): T | null {
   const stmt = db.prepare(sql);
-  return stmt.get(...params) as T | undefined;
+  const result = stmt.get(...params);
+  return result ? (result as T) : null;
 }
 
 export function execute(sql: string, params: any[] = []): Database.RunResult {
